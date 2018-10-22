@@ -58,14 +58,17 @@ func (s *Sender) SendNoRetry(msg *Message) (*Response, error) {
 		return nil, err
 	}
 
-	msg.Notification = msg.Data["notification"];
-	delete(msg.Data, "notification");
 	data, err := json.Marshal(msg)
 	if err != nil {
 		return nil, err
 	}
 
-	req, err := http.NewRequest("POST", gcmSendEndpoint, bytes.NewBuffer(data))
+	notification, err := json.Marshal(msg)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest("POST", gcmSendEndpoint, bytes.NewBuffer(data, notification))
 	if err != nil {
 		return nil, err
 	}
