@@ -70,8 +70,8 @@ func (s *Sender) SendNoRetry(msg *Message) (*Response, error) {
 	}
 
 	buffer := new(bytes.Buffer)
-	buffer.Write(data)
-	buffer.Write(notification)
+	buffer.Write(msg.Data)
+	buffer.Write(msg.Notification)
 
 	req, err := http.NewRequest("POST", gcmSendEndpoint, buffer)
 	if err != nil {
@@ -79,8 +79,6 @@ func (s *Sender) SendNoRetry(msg *Message) (*Response, error) {
 	}
 	req.Header.Add("Authorization", fmt.Sprintf("key=%s", s.ApiKey))
 	req.Header.Add("Content-Type", "application/json")
-log.Print(data);
-log.Print(notification);
 log.Print(req);
 	resp, err := s.Http.Do(req)
 	if err != nil {
