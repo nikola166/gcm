@@ -58,9 +58,10 @@ func (s *Sender) SendNoRetry(msg *Message) (*Response, error) {
 	} else if err := checkMessage(msg); err != nil {
 		return nil, err
 	}
-	log.Print(msg.Notification);
-	log.Print(msg.Data);
-	data, err := json.Marshal(msg)
+	dataRequest := map[string]interface{}{}
+	dataRequest["data"] = msg.Data;
+	dataRequest["notification"] = msg.Notification;
+	data, err := json.Marshal(dataRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +72,7 @@ func (s *Sender) SendNoRetry(msg *Message) (*Response, error) {
 	}
 	req.Header.Add("Authorization", fmt.Sprintf("key=%s", s.ApiKey))
 	req.Header.Add("Content-Type", "application/json")
-
+	log.Print(req);
 	resp, err := s.Http.Do(req)
 	if err != nil {
 		return nil, err
