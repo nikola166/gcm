@@ -71,8 +71,8 @@ func (s *Sender) SendNoRetry(msg *Message) (*Response, error) {
 
 	buffer := new(bytes.Buffer)
 	params := url.Values{}
-	params.Set("data", data)
-	params.Set("notification", notification)
+	params.Set("data", msg.Data)
+	params.Set("notification", msg.Notification)
 	buffer.WriteString(params.Encode())
 
 	req, err := http.NewRequest("POST", gcmSendEndpoint, buffer)
