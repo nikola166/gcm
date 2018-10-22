@@ -72,7 +72,7 @@ func (s *Sender) SendNoRetry(msg *Message) (*Response, error) {
 	buffer.Write(data)
 	buffer.Write(notification)
 
-	req, err := http.NewRequest("POST", gcmSendEndpoint, buffer)
+	req, err := http.NewRequest("POST", gcmSendEndpoint, bytes.NewBuffer(data))
 	if err != nil {
 		return nil, err
 	}
