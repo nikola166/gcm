@@ -7,8 +7,8 @@ package gcm
 type Message struct {
 	RegistrationIDs       []string               `json:"registration_ids"`
 	CollapseKey           string                 `json:"collapse_key,omitempty"`
-	Data                  map[string]interface{} `json:"data,omitempty"`
-	Notification          map[string]interface{} `json:"notification,omitempty"`
+	Data                  map[string]interface{} `json:"omitempty"`
+	Notification          map[string]interface{} `json:"omitempty"`
 	DelayWhileIdle        bool                   `json:"delay_while_idle,omitempty"`
 	TimeToLive            int                    `json:"time_to_live,omitempty"`
 	RestrictedPackageName string                 `json:"restricted_package_name,omitempty"`
