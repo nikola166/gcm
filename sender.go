@@ -59,8 +59,8 @@ func (s *Sender) SendNoRetry(msg *Message) (*Response, error) {
 		return nil, err
 	}
 	dataRequest := map[string]interface{}{}
-	//dataRequest["data"] = msg.Data;
-	dataRequest["notification"] = msg.Notification;
+	dataRequest["data"] = msg.Data["data"];
+	dataRequest["notification"] = msg.Notification["notification"];
 	data, err := json.Marshal(dataRequest)
 	if err != nil {
 		return nil, err
