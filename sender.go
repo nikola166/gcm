@@ -68,8 +68,13 @@ func (s *Sender) SendNoRetry(msg *Message) (*Response, error) {
 		return nil, err
 	}
 
-	dataRequest := map[string]string{"data": data, "notification": notification}
-	req, err := http.NewRequest("POST", gcmSendEndpoint, bytes.NewBuffer(dataRequest))
+	buffer := new(bytes.Buffer)
+	params := url.Values{}
+	params.Set("data", data)
+	params.Set("notification", notification)
+	buffer.WriteString(params.Encode())
+
+	req, err := http.NewRequest("POST", gcmSendEndpoint, buffer)
 	if err != nil {
 		return nil, err
 	}
